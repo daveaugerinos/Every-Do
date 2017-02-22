@@ -17,6 +17,7 @@
 		A29A38FD1E5CDFE600C8654F /* Every_DoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A29A38FC1E5CDFE600C8654F /* Every_DoTests.m */; };
 		A29A39091E5D25F600C8654F /* ToDo.m in Sources */ = {isa = PBXBuildFile; fileRef = A29A39081E5D25F600C8654F /* ToDo.m */; };
 		A29A390C1E5D269C00C8654F /* ToDoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A29A390B1E5D269C00C8654F /* ToDoTableViewCell.m */; };
+		A29A390F1E5E049300C8654F /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A29A390E1E5E049300C8654F /* AddItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,8 @@
 		A29A39081E5D25F600C8654F /* ToDo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToDo.m; sourceTree = "<group>"; };
 		A29A390A1E5D269C00C8654F /* ToDoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToDoTableViewCell.h; sourceTree = "<group>"; };
 		A29A390B1E5D269C00C8654F /* ToDoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToDoTableViewCell.m; sourceTree = "<group>"; };
+		A29A390D1E5E049300C8654F /* AddItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemViewController.h; sourceTree = "<group>"; };
+		A29A390E1E5E049300C8654F /* AddItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				A29A38E81E5CDFE600C8654F /* DetailViewController.h */,
 				A29A38E91E5CDFE600C8654F /* DetailViewController.m */,
 				A29A38EB1E5CDFE600C8654F /* Main.storyboard */,
+				A29A390D1E5E049300C8654F /* AddItemViewController.h */,
+				A29A390E1E5E049300C8654F /* AddItemViewController.m */,
 				A29A38EE1E5CDFE600C8654F /* Assets.xcassets */,
 				A29A38F01E5CDFE600C8654F /* LaunchScreen.storyboard */,
 				A29A38F31E5CDFE600C8654F /* Info.plist */,
@@ -230,6 +235,7 @@
 			files = (
 				A29A39091E5D25F600C8654F /* ToDo.m in Sources */,
 				A29A38E41E5CDFE600C8654F /* AppDelegate.m in Sources */,
+				A29A390F1E5E049300C8654F /* AddItemViewController.m in Sources */,
 				A29A38E71E5CDFE600C8654F /* MasterViewController.m in Sources */,
 				A29A390C1E5D269C00C8654F /* ToDoTableViewCell.m in Sources */,
 				A29A38E11E5CDFE600C8654F /* main.m in Sources */,

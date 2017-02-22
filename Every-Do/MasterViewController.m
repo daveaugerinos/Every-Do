@@ -10,8 +10,9 @@
 #import "DetailViewController.h"
 #import "ToDo.h"
 #import "ToDoTableViewCell.h"
+#import "AddItemViewController.h"
 
-@interface MasterViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MasterViewController () <UITableViewDataSource, UITableViewDelegate, AddToDoDelegate>
 
 @property NSMutableArray *objects;
 
@@ -25,40 +26,40 @@
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addItem:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
     // Initial To Dos
-    ToDo *myToDo1 = [[ToDo alloc] initWithTitle:@"Buy Groceries"
-                                 andDescription:@"Kale, coconuts, walnuts, dark chocolate almonds"
-                                    andPriority:3
-                                 andIsCompleted:YES];
-    
-    ToDo *myToDo2 = [[ToDo alloc] initWithTitle:@"Birthday Party"
-                                 andDescription:@"Meet friends in Gastown on Thursday at 7 PM for celebration"
-                                    andPriority:2
-                                 andIsCompleted:YES];
-
-    ToDo *myToDo3 = [[ToDo alloc] initWithTitle:@"Finish Coding Assignment"
-                                 andDescription:@"Finish this afternoons Objective-C assignment"
-                                    andPriority:1
-                                 andIsCompleted:NO];
-    
-    ToDo *myToDo4 = [[ToDo alloc] initWithTitle:@"Attend Lunch on Wed"
-                                 andDescription:@"Meet so and so at such and such at this time"
-                                    andPriority:1
-                                 andIsCompleted:NO];
-    
-    ToDo *myToDo5 = [[ToDo alloc] initWithTitle:@"Another to do!"
-                                 andDescription:@"Get this done!"
-                                    andPriority:5
-                                 andIsCompleted:YES];
-    
-    [self insertNewObject:myToDo1];
-    [self insertNewObject:myToDo2];
-    [self insertNewObject:myToDo3];
-    [self insertNewObject:myToDo4];
-    [self insertNewObject:myToDo5];
+//    ToDo *myToDo1 = [[ToDo alloc] initWithTitle:@"Buy Groceries"
+//                                 andDescription:@"Kale, coconuts, walnuts, dark chocolate almonds"
+//                                    andPriority:3
+//                                 andIsCompleted:YES];
+//    
+//    ToDo *myToDo2 = [[ToDo alloc] initWithTitle:@"Birthday Party"
+//                                 andDescription:@"Meet friends in Gastown on Thursday at 7 PM for celebration"
+//                                    andPriority:2
+//                                 andIsCompleted:YES];
+//
+//    ToDo *myToDo3 = [[ToDo alloc] initWithTitle:@"Finish Coding Assignment"
+//                                 andDescription:@"Finish this afternoons Objective-C assignment"
+//                                    andPriority:1
+//                                 andIsCompleted:NO];
+//    
+//    ToDo *myToDo4 = [[ToDo alloc] initWithTitle:@"Attend Lunch on Wed"
+//                                 andDescription:@"Meet so and so at such and such at this time"
+//                                    andPriority:1
+//                                 andIsCompleted:NO];
+//    
+//    ToDo *myToDo5 = [[ToDo alloc] initWithTitle:@"Another to do!"
+//                                 andDescription:@"Get this done!"
+//                                    andPriority:5
+//                                 andIsCompleted:YES];
+//    
+//    [self insertNewObject:myToDo1];
+//    [self insertNewObject:myToDo2];
+//    [self insertNewObject:myToDo3];
+//    [self insertNewObject:myToDo4];
+//    [self insertNewObject:myToDo5];
     
     // Sort objects array into non completed and completed to dos
     [self sortObjectsArrayWithKey:@"isCompleted" ascending:YES];
@@ -75,6 +76,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)addItem:(id)sender {
+    
+    [self performSegueWithIdentifier:@"addItem" sender:sender];
+}
+
+- (void)addToDo:(ToDo *)toDo {
+    
+    [self insertNewObject:toDo];
+}
 
 - (void)insertNewObject:(id)sender {
     
@@ -109,6 +119,12 @@
         DetailViewController *controller = (DetailViewController *)[segue destinationViewController];
         [controller setDetailItem:myToDo];
     }
+    
+    if ([[segue identifier] isEqualToString:@"addItem"]) {
+    
+        AddItemViewController *controller = (AddItemViewController *)[segue destinationViewController];
+        controller.delegate = self;
+    }
 }
 
 
@@ -120,7 +136,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"count: %lu", self.objects.count);
+
     return self.objects.count;
 }
 
