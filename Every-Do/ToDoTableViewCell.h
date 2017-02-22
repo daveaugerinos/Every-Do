@@ -11,8 +11,7 @@
 
 @interface ToDoTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) UISwipeGestureRecognizer *swipeGesture;
-
 - (void)configureToDoCell:(ToDo *) toDo;
+- (void)toggleToDoDescrip;
 
 @end

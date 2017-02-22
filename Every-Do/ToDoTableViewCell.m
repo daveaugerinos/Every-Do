@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descripLabel;
 @property (strong, nonatomic) IBOutlet UILabel *priorityNumLabel;
+@property (strong, nonatomic) ToDo *myToDo;
 
 @end
 
@@ -20,21 +21,23 @@
 
 - (void)configureToDoCell:(ToDo *) toDo {
     
+    self.myToDo = toDo;
+    
     // Set labels with object property values
     self.titleLabel.text = toDo.myTitle;
     self.descripLabel.text = toDo.myDescrip;
     self.priorityNumLabel.text = [NSString stringWithFormat:@"%i", toDo.myPriorityNum];
     
     if(toDo.isCompleted) {
-        [self toggleToDoDescrip:toDo];
+        [self toggleToDoDescrip];
     }
 }
 
-- (void)toggleToDoDescrip:(ToDo *)toDo {
+- (void)toggleToDoDescrip {
     
-    if(toDo.isCompleted) {
+    if(self.myToDo.isCompleted) {
 
-        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:toDo.myTitle];
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:self.myToDo.myTitle];
         
         [attributeString addAttribute:NSStrikethroughStyleAttributeName
                                 value:@2
@@ -43,11 +46,7 @@
         self.titleLabel.attributedText = [attributeString mutableCopy];
     }
     
-    toDo.isCompleted = !toDo.isCompleted;
-}
-
-- (void)didSwipe:(UISwipeGestureRecognizer *)sender {
-    
+    self.myToDo.isCompleted = !self.myToDo.isCompleted;
 }
 
 

@@ -15,6 +15,7 @@
 @interface MasterViewController () <UITableViewDataSource, UITableViewDelegate, AddToDoDelegate>
 
 @property NSMutableArray *objects;
+@property (strong, nonatomic) UISwipeGestureRecognizer *swipeRightGesture;
 
 @end
 
@@ -29,14 +30,14 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addItem:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
-    
+    // Added for testing
     if (!self.objects) {
         
         self.objects = [[NSMutableArray alloc] init];
     }
     
     
-    // Initial To Dos
+    // Initial to dos for testing
     ToDo *myToDo1 = [[ToDo alloc] initWithTitle:@"Buy Groceries"
                                  andDescription:@"Kale, coconuts, walnuts, dark chocolate almonds"
                                     andPriority:3
@@ -62,22 +63,20 @@
                                     andPriority:5
                                  andIsCompleted:YES];
     
-//    [self insertNewObject:myToDo1];
     [self.objects insertObject:myToDo1 atIndex:0];
     [self.objects insertObject:myToDo2 atIndex:0];
     [self.objects insertObject:myToDo3 atIndex:0];
     [self.objects insertObject:myToDo4 atIndex:0];
     [self.objects insertObject:myToDo5 atIndex:0];
-
-//    [self insertNewObject:myToDo2];
-//    [self insertNewObject:myToDo3];
-//    [self insertNewObject:myToDo4];
-//    [self insertNewObject:myToDo5];
     
     // Sort objects array into non completed and completed to dos
     [self sortObjectsArrayWithKey:@"isCompleted" ascending:YES];
     
     [self.tableView reloadData];
+    
+    self.swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeRight:)];
+    self.swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.tableView addGestureRecognizer:self.swipeRightGesture];
 }
 
 
@@ -90,6 +89,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)didSwipeRight:(UISwipeGestureRecognizer *)sender {
+ 
+    if(sender.direction == UISwipeGestureRecognizerDirectionRight) {
+        
+        CGPoint locationInTableView = [sender locationInView:self.tableView];
+        
+        NSIndexPath *myIndexPath = [self.tableView indexPathForRowAtPoint:locationInTableView];
+        
+        ToDoTableViewCell *myCell = [self.tableView cellForRowAtIndexPath:myIndexPath];
+        
+        [myCell toggleToDoDescrip];
+    }
+}
+
+
+#pragma mark - Add and Insert -
 
 - (void)addItem:(id)sender {
     
