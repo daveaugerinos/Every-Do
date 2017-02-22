@@ -29,33 +29,46 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addItem:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
+    
+    if (!self.objects) {
+        
+        self.objects = [[NSMutableArray alloc] init];
+    }
+    
+    
     // Initial To Dos
-//    ToDo *myToDo1 = [[ToDo alloc] initWithTitle:@"Buy Groceries"
-//                                 andDescription:@"Kale, coconuts, walnuts, dark chocolate almonds"
-//                                    andPriority:3
-//                                 andIsCompleted:YES];
-//    
-//    ToDo *myToDo2 = [[ToDo alloc] initWithTitle:@"Birthday Party"
-//                                 andDescription:@"Meet friends in Gastown on Thursday at 7 PM for celebration"
-//                                    andPriority:2
-//                                 andIsCompleted:YES];
-//
-//    ToDo *myToDo3 = [[ToDo alloc] initWithTitle:@"Finish Coding Assignment"
-//                                 andDescription:@"Finish this afternoons Objective-C assignment"
-//                                    andPriority:1
-//                                 andIsCompleted:NO];
-//    
-//    ToDo *myToDo4 = [[ToDo alloc] initWithTitle:@"Attend Lunch on Wed"
-//                                 andDescription:@"Meet so and so at such and such at this time"
-//                                    andPriority:1
-//                                 andIsCompleted:NO];
-//    
-//    ToDo *myToDo5 = [[ToDo alloc] initWithTitle:@"Another to do!"
-//                                 andDescription:@"Get this done!"
-//                                    andPriority:5
-//                                 andIsCompleted:YES];
-//    
+    ToDo *myToDo1 = [[ToDo alloc] initWithTitle:@"Buy Groceries"
+                                 andDescription:@"Kale, coconuts, walnuts, dark chocolate almonds"
+                                    andPriority:3
+                                 andIsCompleted:YES];
+    
+    ToDo *myToDo2 = [[ToDo alloc] initWithTitle:@"Birthday Party"
+                                 andDescription:@"Meet friends in Gastown on Thursday at 7 PM for celebration"
+                                    andPriority:2
+                                 andIsCompleted:YES];
+
+    ToDo *myToDo3 = [[ToDo alloc] initWithTitle:@"Finish Coding Assignment"
+                                 andDescription:@"Finish this afternoons Objective-C assignment"
+                                    andPriority:1
+                                 andIsCompleted:NO];
+    
+    ToDo *myToDo4 = [[ToDo alloc] initWithTitle:@"Attend Lunch on Wed"
+                                 andDescription:@"Meet so and so at such and such at this time"
+                                    andPriority:1
+                                 andIsCompleted:NO];
+    
+    ToDo *myToDo5 = [[ToDo alloc] initWithTitle:@"Another to do!"
+                                 andDescription:@"Get this done!"
+                                    andPriority:5
+                                 andIsCompleted:YES];
+    
 //    [self insertNewObject:myToDo1];
+    [self.objects insertObject:myToDo1 atIndex:0];
+    [self.objects insertObject:myToDo2 atIndex:0];
+    [self.objects insertObject:myToDo3 atIndex:0];
+    [self.objects insertObject:myToDo4 atIndex:0];
+    [self.objects insertObject:myToDo5 atIndex:0];
+
 //    [self insertNewObject:myToDo2];
 //    [self insertNewObject:myToDo3];
 //    [self insertNewObject:myToDo4];
@@ -63,6 +76,8 @@
     
     // Sort objects array into non completed and completed to dos
     [self sortObjectsArrayWithKey:@"isCompleted" ascending:YES];
+    
+    [self.tableView reloadData];
 }
 
 

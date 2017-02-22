@@ -44,11 +44,14 @@
 
 - (void)makeNewToDo {
     
-    ToDo *myToDo = [[ToDo alloc] initWithTitle:self.titleTextField.text
-                                andDescription:self.descripTextView.text
-                                   andPriority:[self.priorityTextField.text intValue]
-                                andIsCompleted:NO];
-    [self.delegate addToDo:myToDo];
+    if(![self.titleLabel.text isEqualToString: @""] && ![self.priorityTextField.text isEqualToString: @""] && ![self.descripTextView.text isEqualToString: @""] ) {
+        
+        ToDo *myToDo = [[ToDo alloc] initWithTitle:self.titleTextField.text
+                                    andDescription:self.descripTextView.text
+                                       andPriority:[self.priorityTextField.text intValue]
+                                    andIsCompleted:NO];
+        [self.delegate addToDo:myToDo];
+    }
 }
 
 

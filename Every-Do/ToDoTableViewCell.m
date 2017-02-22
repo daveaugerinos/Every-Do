@@ -31,16 +31,19 @@
 }
 
 - (void)toggleToDoDescrip:(ToDo *)toDo {
-    toDo.isCompleted = !toDo.isCompleted;
     
     if(toDo.isCompleted) {
 
-        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:toDo.myDescrip];
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:toDo.myTitle];
         
         [attributeString addAttribute:NSStrikethroughStyleAttributeName
                                 value:@2
                                 range:NSMakeRange(0, [attributeString length])];
+        
+        self.titleLabel.attributedText = [attributeString mutableCopy];
     }
+    
+    toDo.isCompleted = !toDo.isCompleted;
 }
 
 - (void)didSwipe:(UISwipeGestureRecognizer *)sender {
