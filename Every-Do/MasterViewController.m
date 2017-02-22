@@ -32,7 +32,7 @@
     ToDo *myToDo1 = [[ToDo alloc] initWithTitle:@"Buy Groceries"
                                  andDescription:@"Kale, coconuts, walnuts, dark chocolate almonds"
                                     andPriority:3
-                                 andIsCompleted:NO];
+                                 andIsCompleted:YES];
     
     ToDo *myToDo2 = [[ToDo alloc] initWithTitle:@"Birthday Party"
                                  andDescription:@"Meet friends in Gastown on Thursday at 7 PM for celebration"
@@ -44,9 +44,24 @@
                                     andPriority:1
                                  andIsCompleted:NO];
     
+    ToDo *myToDo4 = [[ToDo alloc] initWithTitle:@"Attend Lunch on Wed"
+                                 andDescription:@"Meet so and so at such and such at this time"
+                                    andPriority:1
+                                 andIsCompleted:NO];
+    
+    ToDo *myToDo5 = [[ToDo alloc] initWithTitle:@"Another to do!"
+                                 andDescription:@"Get this done!"
+                                    andPriority:5
+                                 andIsCompleted:YES];
+    
     [self insertNewObject:myToDo1];
     [self insertNewObject:myToDo2];
     [self insertNewObject:myToDo3];
+    [self insertNewObject:myToDo4];
+    [self insertNewObject:myToDo5];
+    
+    // Sort objects array into non completed and completed to dos
+    [self sortObjectsArrayWithKey:@"isCompleted" ascending:YES];
 }
 
 
@@ -75,14 +90,12 @@
 
 #pragma mark - Sort Array -
 
-- (NSArray *)sortObjectArray:(NSMutableArray *)array withKey:(NSString *)key ascending:(BOOL)boolean {
+- (void)sortObjectsArrayWithKey:(NSString *)key ascending:(BOOL)boolean {
     
-    NSSortDescriptor *isCompletedDescriptor = [[NSSortDescriptor alloc] initWithKey:key
-                                                                          ascending:boolean];
+    // Sort objects array by key and ascending or descending order
+    NSSortDescriptor *isCompletedDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:boolean];
     NSArray *sortDescriptors = @[isCompletedDescriptor];
-    NSArray *sortedArray = [array sortedArrayUsingDescriptors:sortDescriptors];
-
-    return sortedArray;
+    [self.objects sortUsingDescriptors:sortDescriptors];
 }
 
 #pragma mark - Segues -
@@ -92,9 +105,9 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
+        ToDo *myToDo = self.objects[indexPath.row];
         DetailViewController *controller = (DetailViewController *)[segue destinationViewController];
-        [controller setDetailItem:object];
+        [controller setDetailItem:myToDo];
     }
 }
 
@@ -102,81 +115,28 @@
 #pragma mark - Table View -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
- 
-    // Sort array into non completed and completed to dos
-    NSArray *sortedArray = [self sortObjectArray:self.objects withKey:@"isCompleted" ascending:YES];
-    
-    // Iterate thru sorted array and return count for section based on number of
-    // non completed or completed to do objects
-    if(sortedArray) {
-        
-        int count = 1;
-        
-        for (ToDo *myToDo in sortedArray) {
-            
-            if(myToDo.isCompleted) {
-                
-                count++;
-            }
-        }
-        
-        if(section == 0) {
-            return count;
-        }
-        
-        else {
-            return (int)sortedArray.count - count;
-        }
-    }
-    
-    return 0;
+    NSLog(@"count: %lu", self.objects.count);
+    return self.objects.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ToDoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ToDoTableViewCell" forIndexPath:indexPath];
-    
-    // Sort array into non completed and completed to dos
-    NSArray *sortedArray = [self sortObjectArray:self.objects withKey:@"isCompleted" ascending:YES];
-    
-    // Iterate thru sorted array to find index position for non completed vs completed to dos
-    int index = 0;
-    
-    for (ToDo *myToDo in sortedArray) {
         
-        if(myToDo.isCompleted) {
-            index++;
-        }
-    }
-    
-    // Check section and return cell based on index position
-    if(indexPath.section == 0) {
-        
-         [cell configureToDoCell:sortedArray[indexPath.row]];
-    }
-    
-    else {
-        
-         [cell configureToDoCell:sortedArray[indexPath.row + index]];
-    }
-    
+    [cell configureToDoCell:self.objects[indexPath.row]];
+
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    if(section == 0) {
-        return @"List of To Do Items";
-    }
-    else {
-        return @"Completed To Do Items";
-    }
+    return @"List of To Do Items";
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
