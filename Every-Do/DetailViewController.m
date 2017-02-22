@@ -14,7 +14,7 @@
 
 @implementation DetailViewController
 
-#pragma mark - Managing the detail item
+#pragma mark - Managing the detail item -
 
 - (void)setDetailItem:(id)newDetailItem {
     if (_detailItem != newDetailItem) {
